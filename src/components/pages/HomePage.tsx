@@ -1,221 +1,55 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import type { InputRef } from 'antd';
-import { Button, Form, Input, Popconfirm, Table } from 'antd';
-import type { FormInstance } from 'antd/es/form';
-import { AnyObject } from 'antd/es/_util/type';
-import { useAppDispatch } from '../../store/store';
+import { useEffect } from 'react'
+import { Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
 import { useSelector } from 'react-redux';
-import { carrierAsync, carrierSelector } from '../../store/slices/todoSlice';
-import { Carrier } from '../../type/todo.type';
+import { carrierSelector, carrierAsync } from '../../store/slices/todoSlice';
+import { useAppDispatch } from '../../store/store';
+import { Carrier } from '../../type';
 
 type Props = {}
 
-const EditableContext = React.createContext<FormInstance<any> | null>(null);
-
-interface EditableRowProps {
-    index: number;
-}
-
-const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
-    const [form] = Form.useForm();
-    return (
-        <Form form={form} component={false}>
-            <EditableContext.Provider value={form}>
-                <tr {...props} />
-            </EditableContext.Provider>
-        </Form>
-    );
-};
-
-interface EditableCellProps {
-    title: React.ReactNode;
-    editable: boolean;
-    children: React.ReactNode;
-    dataIndex: keyof Carrier;
-    record: Carrier;
-    handleSave: (record: Carrier) => void;
-}
-
-const EditableCell: React.FC<EditableCellProps> = ({
-    title,
-    editable,
-    children,
-    dataIndex,
-    record,
-    handleSave,
-    ...restProps
-}) => {
-    const [editing, setEditing] = useState(false);
-    const inputRef = useRef<InputRef>(null);
-    const form = useContext(EditableContext)!;
-
-    useEffect(() => {
-        if (editing) {
-            inputRef.current!.focus();
-        }
-    }, [editing]);
-
-    const toggleEdit = () => {
-        setEditing(!editing);
-        form.setFieldsValue({ [dataIndex]: record[dataIndex] });
-    };
-
-    const save = async () => {
-        try {
-            const values = await form.validateFields();
-
-            toggleEdit();
-            handleSave({ ...record, ...values });
-        } catch (errInfo) {
-            console.log('Save failed:', errInfo);
-        }
-    };
-
-    let childNode = children;
-
-    if (editable) {
-        childNode = editing ? (
-            <Form.Item
-                style={{ margin: 0 }}
-                name={dataIndex}
-                rules={[
-                    {
-                        required: true,
-                        message: `${title} is required.`,
-                    },
-                ]}
-            >
-                <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-            </Form.Item>
-        ) : (
-            <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
-                {children}
-            </div>
-        );
-    }
-
-    return <td {...restProps}>{childNode}</td>;
-};
-
-type EditableTableProps = Parameters<typeof Table>[0];
-
-type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
-
 export default function HomePage({ }: Props) {
     const dispatch = useAppDispatch()
-
-    const todoReducer = useSelector(carrierSelector)
+    const carrierReducer = useSelector(carrierSelector)
 
     useEffect(() => {
         dispatch(carrierAsync())
     }, []);
 
-    const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
+    const columns: ColumnsType<Carrier> = [
         {
-            title: 'carrier_name',
+            title: 'Full Name',
+            width: 100,
+            dataIndex: 'cr_id',
+            key: '_name',
+            fixed: 'left',
+        },
+        {
+            title: 'Age',
+            width: 100,
             dataIndex: 'carrier_name',
-            // width: '30%',
-            // editable: true,
+            key: 'age',
+            fixed: 'left',
+            sorter: true,
         },
+        { title: 'Column 1', dataIndex: 'holder', key: '1' },
+        { title: 'Column 2', dataIndex: 'maxcapacity', key: '2' },
+        { title: 'Column 3', dataIndex: 'burden', key: '3' },
+        { title: 'Column 4', dataIndex: 'Width', key: '4' },
+        { title: 'Column 5', dataIndex: 'carrier_max_FTS', key: '5' },
+        { title: 'Column 6', dataIndex: 'carrier_max_crane', key: '6' },
+        { title: 'Column 7', dataIndex: 'length', key: '7' },
+        { title: 'Column 8', dataIndex: 'has_crane', key: '8' },
         {
-            title: 'holder',
-            dataIndex: 'holder',
-            // width: '30%',
-            // editable: true,
-        },
-        {
-            title: 'maxcapacity',
-            dataIndex: 'maxcapacity',
-        },
-        {
-            title: 'burden',
-            dataIndex: 'burden',
-        },
-        {
-            title: 'Width',
-            dataIndex: 'Width',
-        },
-        {
-            title: 'carrier_max_FTS',
-            dataIndex: 'carrier_max_FTS',
-        },
-        {
-            title: 'carrier_max_crane',
-            dataIndex: 'carrier_max_crane',
-        },
-        {
-            title: 'length',
-            dataIndex: 'length',
-        },
-        {
-            title: 'has_crane',
-            dataIndex: 'has_crane',
-        },
-        {
-            title: 'operation',
-            dataIndex: 'operation',
-            render: (_: any, record: AnyObject) => (
-                <Button onClick={() => console.log(record.carrier_name)}>Click me</Button>
-            ),
+            title: 'Action',
+            key: 'operation',
+            fixed: 'right',
+            width: 100,
+            render: () => <a>action</a>,
         },
     ];
 
-    const handleAdd = () => {
-        // const newData: DataType = {
-        //     key: count,
-        //     name: `Edward King ${count}`,
-        //     name2: `Edward King ${count}`,
-        //     age: '32',
-        //     address: `London, Park Lane no. ${count}`,
-        // };
-        // setDataSource([...dataSource, newData]);
-        // setCount(count + 1);
-    };
-
-    const handleSave = (row: Carrier) => {
-        // const newData = [...dataSource];
-        // const index = newData.findIndex((item) => row.id === item.id);
-        // const item = newData[index];
-        // newData.splice(index, 1, {
-        //     ...item,
-        //     ...row,
-        // });
-        // setDataSource(newData);
-    };
-
-    const components = {
-        body: {
-            row: EditableRow,
-            cell: EditableCell,
-        },
-    };
-
-    const columns = defaultColumns.map((col) => {
-        if (!col.editable) {
-            return col;
-        }
-        return {
-            ...col,
-            onCell: (record: Carrier) => ({
-                record,
-                editable: col.editable,
-                dataIndex: col.dataIndex,
-                title: col.title,
-                handleSave,
-            }),
-        };
-    });
-
     return (
-        <div>
-            <Button onClick={handleAdd} style={{ marginBottom: 16 }} >Add a row</Button>
-            <Table
-                components={components}
-                rowClassName={() => 'editable-row'}
-                bordered
-                dataSource={todoReducer.result}
-                columns={columns as ColumnTypes}
-            />
-        </div>
-    );
-};
+        <Table columns={columns} dataSource={carrierReducer.result} scroll={{ x: 1300 }} rowKey={(record) => record.cr_id.toString()} />
+    )
+}

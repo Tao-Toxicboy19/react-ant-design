@@ -22,18 +22,33 @@ export default function SiderLayout({ }: Props) {
                 theme="dark"
                 mode="inline"
                 defaultSelectedKeys={['1']}
-            >
-                <Menu.Item key="1" icon={<UserOutlined />}>
-                    <Link to="/">Home</Link>
-                </Menu.Item>
-                <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                    <Link to="/videos">Videos</Link>
-                </Menu.Item>
-                <Menu.Item key="3" icon={<UploadOutlined />}>
-                    <Link to="/upload">Upload</Link>
-                </Menu.Item>
-            </Menu>
-
+                items={[
+                    {
+                        key: '1',
+                        icon:
+                            <Link to="/">
+                                <UserOutlined />
+                            </Link>,
+                        label: 'nav 1',
+                    },
+                    {
+                        key: '2',
+                        icon:
+                            <Link to="/videos">
+                                <VideoCameraOutlined />
+                            </Link>,
+                        label: 'nav 2',
+                    },
+                    {
+                        key: '3',
+                        icon:
+                            <Link to="/upload">
+                                <UploadOutlined />
+                            </Link>,
+                        label: 'nav 3',
+                    },
+                ]}
+            />
         </Sider>
     )
 }
