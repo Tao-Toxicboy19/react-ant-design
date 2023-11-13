@@ -108,7 +108,6 @@ export default function HomePage({ }: Props) {
 
     useEffect(() => {
         dispatch(carrierAsync())
-
     }, []);
 
     const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
@@ -155,7 +154,7 @@ export default function HomePage({ }: Props) {
         {
             title: 'operation',
             dataIndex: 'operation',
-            render: (_: any, record) => (
+            render: (_: any, record: AnyObject) => (
                 <Button onClick={() => console.log(record.carrier_name)}>Click me</Button>
             ),
         },

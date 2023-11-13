@@ -1,10 +1,12 @@
-import React from 'react';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, theme } from 'antd';
 import HomePage from './components/pages/HomePage';
+import SiderLayout from './components/layouts/SiderLayout/SiderLayout';
+import HeaderLayout from './components/layouts/HeaderLayout/HeaderLayout';
+import FooterLayout from './components/layouts/FooterLayout/FooterLayout';
+import { Content } from 'antd/es/layout/layout';
+import { Route, Routes } from 'react-router-dom';
 
 type Props = {}
-const { Header, Content, Footer, Sider } = Layout;
 
 export default function App({ }: Props) {
   const {
@@ -13,41 +15,29 @@ export default function App({ }: Props) {
 
   return (
     <Layout>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['4']}
-          items={[UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
-            (icon, index) => ({
-              key: String(index + 1),
-              icon: React.createElement(icon),
-              label: `nav ${index + 1}`,
-            }),
-          )}
-        />
-      </Sider>
+
+      <SiderLayout />
+
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+
+        <HeaderLayout />
+
         <Content style={{ margin: '24px 16px 0' }}>
           <div style={{ padding: 24, minHeight: "100vh", background: colorBgContainer }}>
 
-            <HomePage />
+            <Routes>
+
+              <Route path="/" element={<HomePage />} />
+
+            </Routes>
 
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+
+        <FooterLayout />
+
       </Layout>
+
     </Layout>
   );
 }
