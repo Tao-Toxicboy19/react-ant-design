@@ -1,10 +1,10 @@
 import { Layout } from 'antd';
+import { Content } from 'antd/es/layout/layout';
+import { Route, Routes } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import SiderLayout from './components/layouts/SiderLayout/SiderLayout';
 import HeaderLayout from './components/layouts/HeaderLayout/HeaderLayout';
 import FooterLayout from './components/layouts/FooterLayout/FooterLayout';
-import { Content } from 'antd/es/layout/layout';
-import { Route, Routes } from 'react-router-dom';
 import LoginPage from './components/pages/LoginPage/LoginPage';
 
 type Props = {}
