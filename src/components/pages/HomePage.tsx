@@ -18,19 +18,18 @@ export default function HomePage({ }: Props) {
 
     const columns: ColumnsType<Carrier> = [
         {
-            title: 'Full Name',
-            width: 100,
+            title: '#',
+            width: 50,
             dataIndex: 'cr_id',
-            key: '_name',
+            key: 'cr_id',
             fixed: 'left',
         },
         {
             title: 'Age',
-            width: 100,
+            width: 180,
             dataIndex: 'carrier_name',
             key: 'age',
             fixed: 'left',
-            sorter: true,
         },
         { title: 'Column 1', dataIndex: 'holder', key: '1' },
         { title: 'Column 2', dataIndex: 'maxcapacity', key: '2' },

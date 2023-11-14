@@ -1,7 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { httpClient } from "../../utils";
-import { server } from "../../Constants";
 import { Carrier } from "../../type/todo.type";
 
 type CarrierState = {
