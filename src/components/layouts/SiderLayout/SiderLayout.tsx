@@ -7,47 +7,41 @@ type Props = {}
 
 export default function SiderLayout({ }: Props) {
     return (
-        <Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-            onBreakpoint={(broken) => {
-                console.log(broken);
-            }}
-            onCollapse={(collapsed, type) => {
-                console.log(collapsed, type);
-            }}
-        >
-            <div className="demo-logo-vertical" />
+        <Sider width={200}>
             <Menu
-                theme="dark"
+                className='dark:text-gray-100 dark:bg-slate-900 bg-[#e5e5e5] duration-1000'
                 mode="inline"
                 defaultSelectedKeys={['1']}
-                items={[
-                    {
-                        key: '1',
-                        icon:
-                            <Link to="/">
-                                <UserOutlined />
-                            </Link>,
-                        label: 'nav 1',
-                    },
-                    {
-                        key: '2',
-                        icon:
-                            <Link to="/videos">
-                                <VideoCameraOutlined />
-                            </Link>,
-                        label: 'nav 2',
-                    },
-                    {
-                        key: '3',
-                        icon:
-                            <Link to="/upload">
-                                <UploadOutlined />
-                            </Link>,
-                        label: 'nav 3',
-                    },
-                ]}
+                defaultOpenKeys={['sub1']}
+                style={{ height: '100%', borderRight: 0 }
+                }
+                items={
+                    [
+                        {
+                            key: '1',
+                            icon:
+                                <Link to="/">
+                                    <UserOutlined />
+                                </Link>,
+                            label: 'nav 1',
+                        },
+                        {
+                            key: '2',
+                            icon:
+                                <Link to="/videos">
+                                    <VideoCameraOutlined />
+                                </Link>,
+                            label: 'nav 2',
+                        },
+                        {
+                            key: '3',
+                            icon:
+                                <Link to="/upload">
+                                    <UploadOutlined />
+                                </Link>,
+                            label: 'nav 3',
+                        },
+                    ]}
             />
         </Sider>
     )

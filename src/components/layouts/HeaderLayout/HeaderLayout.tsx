@@ -1,5 +1,3 @@
-import { theme } from 'antd';
-import { Header } from 'antd/es/layout/layout';
 import { useState, useEffect } from 'react';
 import { IoMdSunny } from "react-icons/io";
 import { FaMoon, FaDesktop } from 'react-icons/fa';
@@ -53,11 +51,12 @@ export default function HeaderLayout({ }: Props) {
                 break;
         }
     }, [theme]);
+
     return (
         <>
-            <div className='dark:text-gray-100 dark:bg-slate-900 duration-500 '>
-                <div className='flex justify-end my-3'>
-                    <div className='flex duration-100 rounded-xl dark:bg-slate-700 bg-gray-100'>
+            <div className='dark:text-gray-100 dark:bg-slate-900 bg-[#e5e5e5] duration-500'>
+                <div className='flex justify-end m-3'>
+                    <div className='flex duration-500 rounded-xl dark:bg-slate-700 bg-gray-100'>
                         {options?.map(opt => (
                             <button
                                 key={opt.text}

@@ -1,4 +1,4 @@
-import { Layout, theme } from 'antd';
+import { Layout } from 'antd';
 import HomePage from './components/pages/HomePage';
 import SiderLayout from './components/layouts/SiderLayout/SiderLayout';
 import HeaderLayout from './components/layouts/HeaderLayout/HeaderLayout';
@@ -6,10 +6,6 @@ import FooterLayout from './components/layouts/FooterLayout/FooterLayout';
 import { Content } from 'antd/es/layout/layout';
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './components/pages/LoginPage/LoginPage';
-
-import { useEffect, useState } from 'react';
-
-
 
 type Props = {}
 
@@ -27,7 +23,7 @@ export default function App({ }: Props) {
         <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{ padding: 24, minHeight: "83.6dvh" }}
-            className='dark:text-gray-100 dark:bg-slate-900 duration-500'
+            className='dark:text-gray-100 dark:bg-slate-900 bg-[#e5e5e5] duration-500'
           >
             <Routes>
 
