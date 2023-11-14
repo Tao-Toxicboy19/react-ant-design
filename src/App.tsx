@@ -27,9 +27,9 @@ export default function App({ }: Props) {
           >
             <Routes>
 
-              {/* <Route path="/" element={<HomePage />} /> */}
+              <Route path="/" element={<HomePage />} />
 
-              {/* <Route path="/login" element={<LoginPage />} /> */}
+              <Route path="/login" element={<LoginPage />} />
 
             </Routes>
 
