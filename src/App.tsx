@@ -15,16 +15,12 @@ import { useEffect, useState } from 'react';
 type Props = {}
 
 export default function App({ }: Props) {
-  // const {
-  //   token: { colorBgContainer },
-  // } = theme.useToken();
 
-  const [theme, setTheme] = useState<string>(
-    localStorage.getItem("theme") || "system"
+  const [theme, setTheme] = useState<string | null>(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system"
   );
   const element = document.documentElement
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)")
-  console.log(darkQuery)
   const options = [
     {
       icon: "IoMdSunny",
@@ -48,8 +44,6 @@ export default function App({ }: Props) {
     }
   }
 
-  onWindowMatch()
-
   useEffect(() => {
     switch (theme) {
       case 'dark':
@@ -64,6 +58,7 @@ export default function App({ }: Props) {
 
       default:
         localStorage.removeItem('theme')
+        onWindowMatch()
         break;
     }
   }, [theme]);
@@ -80,7 +75,7 @@ export default function App({ }: Props) {
         <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{ padding: 24, minHeight: "83.6dvh" }}
-            className='dark:text-gray-100 dark:bg-slate-900 duration-100'
+            className='dark:text-gray-100 dark:bg-slate-900 duration-500'
           >
             <div className='flex top-5 right-10 duration-100 dark:bg-slate-700 bg-gray-100 rounded-xl'>
               {options?.map(opt => (
