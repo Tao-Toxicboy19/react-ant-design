@@ -1,4 +1,3 @@
-import React from 'react'
 import backgroundprofile from '../../../assets/335222763_168330922719509_3532252288224746336_n.jpg'
 
 type Props = {}
