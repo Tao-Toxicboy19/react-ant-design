@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
 import carrierReducer from "./slices/todoSlice";
+import loginReducer from "./slices/loginSlice";
 
 const reducer = {
-    carrierReducer
+    carrierReducer,
+    loginReducer,
 };
 
 export const store = configureStore({

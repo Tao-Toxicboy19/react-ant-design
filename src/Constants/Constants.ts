@@ -8,9 +8,11 @@ export const apiImageUrl = "http://localhost:30/uploads/";
 
 
 export const server = {
-    LOGIN_URL: `login`,
+    LOGIN_URL: `auth/local/login`,
     REGISTER_URL: `register`,
     PUPPY_URL: `puppy`,
 };
 
 export const OK = "OK";
+export const LOGOUT = "logout";
+export const TOKEN = "token";

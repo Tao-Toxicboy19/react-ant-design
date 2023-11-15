@@ -1,6 +1,6 @@
-import { Layout } from 'antd';
+import { Avatar, Button, Dropdown, Layout, MenuProps, Tooltip } from 'antd';
 import { Content } from 'antd/es/layout/layout';
-import { Route, Routes } from 'react-router-dom';
+import { Link, NavigateFunction, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import SiderLayout from './components/layouts/SiderLayout/SiderLayout';
 import HeaderLayout from './components/layouts/HeaderLayout/HeaderLayout';
@@ -8,34 +8,58 @@ import FooterLayout from './components/layouts/FooterLayout/FooterLayout';
 import LoginPage from './components/pages/LoginPage/LoginPage';
 import { HiOutlineViewGrid } from "react-icons/hi";
 import { FaRegUserCircle } from "react-icons/fa";
+import { useEffect, useState } from 'react';
+import { HiOutlineDotsVertical } from "react-icons/hi";
+import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
+import { loginSelector, restoreLogin } from './store/slices/loginSlice';
+import { useAppDispatch } from './store/store';
+import { useSelector } from 'react-redux';
+import ProfilePage from './components/pages/ProfilePage/ProfilePage';
 
 type Props = {}
 
 export default function App({ }: Props) {
+  const dispatch = useAppDispatch()
+  const loginReducer = useSelector(loginSelector)
+  const location = useLocation();
 
+  useEffect(() => {
+    dispatch(restoreLogin())
+  }, []);
+  
   return (
-    <main className='flex min-h-screen'>
-      <div className='flex flex-col bg-red-200 min-h-screen w-16 sm:w-56'>
-        <div className='w-full h-16 bg-slate-500 flex justify-center items-center'>
-          logo
-        </div>
-        <div className='flex flex-col gap-y-3 mt-3'>
-          <button className='w-full flex justify-center text-3xl py-2 transition duration-300 transform hover:scale-105 hover:bg-blue-100 hover:cursor-pointer'>
-            <HiOutlineViewGrid className="text-xl" />
-          </button>
-          <button className='w-full flex justify-center text-3xl py-2 transition duration-300 transform hover:scale-105 hover:bg-blue-100 hover:cursor-pointer'>
-            <FaRegUserCircle className="text-xl" />
-          </button>
-        </div>
-      </div>
-      <div className='w-full h-16 bg-red-200'>
-        <div>
-          Header
+    <main className='flex flex-col min-h-screen bg-[#EFF2F8]'>
+      <div className='grid grid-cols-8'>
+
+        {loginReducer.result && <SiderLayout />}
+
+        <div className={`${loginReducer.result ? "col-span-7" : "col-span-8"}`}>
+
+        {loginReducer.result && location.pathname !== '/profile' && <HeaderLayout />}
+
+          <Content>
+            <Routes>
+
+              <Route element={<PrivateRoute />}>
+                <Route path='/' element={<HomePage />} />
+                <Route path='/profile' element={<ProfilePage />} />
+              </Route>
+
+              <Route element={<PublicRoute />}>
+
+                <Route path='/login' element={<LoginPage />} />
+
+              </Route>
+
+            </Routes>
+          </Content>
         </div>
       </div>
     </main>
   );
 }
+
 
 
 // <Layout>
