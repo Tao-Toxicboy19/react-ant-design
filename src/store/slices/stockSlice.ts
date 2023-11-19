@@ -29,7 +29,7 @@ export const stocksAsync = createAsyncThunk(
     'stocks/stocksAsync',
     async () => {
         try {
-            const result = await httpClient.get<Stocks[]>('http://localhost:30/api/products');
+            const result = await httpClient.get<Stocks[]>(server.PRODUCTS_URL);
             return result.data;
         } catch (error) {
             throw error;
