@@ -11,6 +11,7 @@ export const server = {
     LOGIN_URL: `auth/local/login`,
     REGISTER_URL: `register`,
     PUPPY_URL: `puppy`,
+    PRODUCTS_URL:`products`,
 };
 
 export const OK = "OK";

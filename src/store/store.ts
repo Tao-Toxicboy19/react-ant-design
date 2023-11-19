@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 
 import carrierReducer from "./slices/todoSlice";
 import loginReducer from "./slices/loginSlice";
+import stocksReducer from "./slices/stockSlice";
 
 const reducer = {
     carrierReducer,
     loginReducer,
+    stocksReducer,
 };
 
 export const store = configureStore({
